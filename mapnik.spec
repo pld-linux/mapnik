@@ -27,7 +27,6 @@ BuildRequires:	python-pycairo-devel
 BuildRequires:	scons
 BuildRequires:	sqlite3-devel
 BuildRequires:	zlib-devel
-Requires:	%{name}-libs = %{name}-%{release}
 Suggests:	fonts-TTF-DejaVu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -45,7 +44,7 @@ made a decade ago.
 %package -n python-%{name}
 Summary:	Python bindings for Mapnik
 Group:		Libraries/Python
-Requires:	%{name} = %{name}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description -n python-%{name}
 Python binding for Mapnik, the toolkit for developing GIS (Geographic
@@ -55,7 +54,7 @@ Information Systems) applications.
 Summary:	Header files for Mapnik
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki Mapnik
 Group:		Development/Libraries
-Requires:	%{name} = %{name}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for Mapnik.
