@@ -81,21 +81,23 @@ Statyczna biblioteka ....
 %build
 %scons \
 	PREFIX=%{_prefix} \
-	BOOST_TOOLKIT=gcc43
+	BOOST_TOOLKIT=gcc43 \
+	SYSTEM_FONTS=/usr/share/fonts/TTF
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %scons install \
 	PREFIX=%{_prefix} \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	SYSTEM_FONTS=/usr/share/fonts/TTF
 
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
 %py_postclean
 
-# DejaVu fonts are available in a separate package
-rm -rf $RPM_BUILD_ROOT%{_libdir}/%{name}/fonts
+## DejaVu fonts are available in a separate package
+#rm -rf $RPM_BUILD_ROOT%{_libdir}/%{name}/fonts
 
 %clean
 rm -rf $RPM_BUILD_ROOT
