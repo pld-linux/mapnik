@@ -16,14 +16,17 @@ BuildRequires:	curl-devel
 BuildRequires:	freetype-devel
 BuildRequires:	libicu-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	libltdl-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	ogdi-devel
+BuildRequires:	pkgconfig
 BuildRequires:	postgresql-devel
 BuildRequires:	proj-devel
 BuildRequires:	python-devel
 BuildRequires:	python-pycairo-devel
+BuildRequires:	rpm-pythonprov
 BuildRequires:	scons
 BuildRequires:	sqlite3-devel
 BuildRequires:	zlib-devel
@@ -63,16 +66,16 @@ Header files for Mapnik.
 Pliki nagłówkowe biblioteki Mapnik.
 
 %package static
-Summary:	Static ... library
-Summary(pl.UTF-8):	Statyczna biblioteka ...
+Summary:	Static Mapnik library
+Summary(pl.UTF-8):	Statyczna biblioteka Mapnik
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-Static ... library.
+Static Mapnik library.
 
 %description static -l pl.UTF-8
-Statyczna biblioteka ....
+Statyczna biblioteka Mapnik.
 
 %prep
 %setup -q
