@@ -1,20 +1,13 @@
---- mapnik-0.6.0/SConstruct~	2009-04-01 17:32:53.000000000 +0200
-+++ mapnik-0.6.0/SConstruct	2009-05-08 21:31:52.000000000 +0200
-@@ -588,10 +588,6 @@
-     # which goes <toolset>-<threading>-<abi>-<version>. See:
-     #  http://www.boost.org/doc/libs/1_35_0/more/getting_started/unix-variants.html#library-naming
-     append_params = ['']
--    if env['BOOST_TOOLKIT']: append_params.append(env['BOOST_TOOLKIT'])
--    if thread_flag: append_params.append(thread_flag)
--    if env['BOOST_ABI']: append_params.append(env['BOOST_ABI'])
--    if env['BOOST_VERSION']: append_params.append(env['BOOST_VERSION'])
-     
-     # if the user is not setting custom boost configuration
-     # enforce boost version greater than or equal to 1.33
-@@ -885,4 +881,4 @@
-     SConscript('bindings/python/SConscript')
+--- mapnik-0.7.1/SConstruct~	2010-03-22 18:40:47.000000000 +0200
++++ mapnik-0.7.1/SConstruct	2010-04-06 15:26:44.282392752 +0300
+@@ -561,10 +561,6 @@
+         # which goes <toolset>-<threading>-<abi>-<version>. See:
+         #  http://www.boost.org/doc/libs/1_35_0/more/getting_started/unix-variants.html#library-naming
+         append_params = ['']
+-        if env['BOOST_TOOLKIT']: append_params.append(env['BOOST_TOOLKIT'])
+-        if thread_flag: append_params.append(thread_flag)
+-        if env['BOOST_ABI']: append_params.append(env['BOOST_ABI'])
+-        if env['BOOST_VERSION']: append_params.append(env['BOOST_VERSION'])
  
- # Configure fonts and if requested install the bundled DejaVu fonts
--SConscript('fonts/SConscript')
-\ No newline at end of file
-+SConscript('fonts/SConscript')
+         # Constructing the BOOST_APPEND setting that will be used to find the
+         # Boost libraries.

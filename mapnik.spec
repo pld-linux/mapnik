@@ -1,12 +1,12 @@
 #
-Summary:	Toolkit for developing GIS (Geographic Information Systems) applications.
+Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
-Version:	0.6.0
-Release:	1
+Version:	0.7.1
+Release:	0.1
 License:	LGPL v2.1
 Group:		Applications
 Source0:	http://download.berlios.de/mapnik/%{name}-%{version}.tar.bz2
-# Source0-md5:	981271ac1cd1432314a963809c245fe1
+# Source0-md5:	8f65fda2a792518d6f6be8a85f62fc73
 Patch0:		%{name}-boost_lib_names.patch
 URL:		http://prdownload.berlios.de/
 BuildRequires:	boost-devel
@@ -34,15 +34,15 @@ Suggests:	fonts-TTF-DejaVu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Mapnik is a Free Toolkit for developing mapping applications. It's written in
-C++ and there are Python bindings to facilitate fast-paced agile development.
-It can comfortably be used for both desktop and web development, which was
-something I wanted from the beginning.
+Mapnik is a Free Toolkit for developing mapping applications. It's
+written in C++ and there are Python bindings to facilitate fast-paced
+agile development. It can comfortably be used for both desktop and web
+development, which was something I wanted from the beginning.
 
-Mapnik is about making beautiful maps. It uses the AGG library and offers world
-class anti-aliasing rendering with subpixel accuracy for geographic data. It is
-written from scratch in modern C++ and doesn't suffer from design decisions
-made a decade ago.
+Mapnik is about making beautiful maps. It uses the AGG library and
+offers world class anti-aliasing rendering with subpixel accuracy for
+geographic data. It is written from scratch in modern C++ and doesn't
+suffer from design decisions made a decade ago.
 
 %package -n python-%{name}
 Summary:	Python bindings for Mapnik
@@ -85,7 +85,7 @@ Statyczna biblioteka Mapnik.
 %scons \
 	PREFIX=%{_prefix} \
 	BOOST_TOOLKIT=gcc43 \
-	SYSTEM_FONTS=/usr/share/fonts/TTF
+	SYSTEM_FONTS=%{_datadir}/fonts/TTF
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -93,7 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 %scons install \
 	PREFIX=%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT \
-	SYSTEM_FONTS=/usr/share/fonts/TTF
+	SYSTEM_FONTS=%{_datadir}/fonts/TTF
 
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
