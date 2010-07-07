@@ -2,7 +2,7 @@
 Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
 Version:	0.7.1
-Release:	0.1
+Release:	1
 License:	LGPL v2.1
 Group:		Applications
 Source0:	http://download.berlios.de/mapnik/%{name}-%{version}.tar.bz2
@@ -14,6 +14,7 @@ BuildRequires:	boost-python-devel
 BuildRequires:	cairomm-devel
 BuildRequires:	curl-devel
 BuildRequires:	freetype-devel
+BuildRequires:	gdal-devel
 BuildRequires:	libicu-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libltdl-devel
@@ -84,6 +85,7 @@ Statyczna biblioteka Mapnik.
 %scons \
 	PREFIX=%{_prefix} \
 	BOOST_TOOLKIT=gcc43 \
+	INPUT_PLUGINS='raster,sqlite,osm,gdal,kismet,shape,postgis,ogr' \
 	SYSTEM_FONTS=%{_datadir}/fonts/TTF
 
 %install
