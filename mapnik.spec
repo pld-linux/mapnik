@@ -20,7 +20,6 @@ BuildRequires:	libltdl-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libxml2-devel
-BuildRequires:	ogdi-devel
 BuildRequires:	pkgconfig
 BuildRequires:	postgresql-devel
 BuildRequires:	proj-devel
