@@ -1,14 +1,13 @@
 #
 Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
-Version:	0.7.1
-Release:	4
+Version:	2.0.0
+Release:	1
 License:	LGPL v2.1
 Group:		Applications
 Source0:	http://download.berlios.de/mapnik/%{name}-%{version}.tar.bz2
-# Source0-md5:	8f65fda2a792518d6f6be8a85f62fc73
+# Source0-md5:	499c6a61544014b9bc2a7c978f963ef3
 Patch0:		%{name}-boost_lib_names.patch
-Patch1:		boost-filesystem.patch
 URL:		http://mapnik.org/
 BuildRequires:	boost-devel
 BuildRequires:	boost-python-devel
@@ -81,13 +80,12 @@ Statyczna biblioteka Mapnik.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %scons \
 	PREFIX=%{_prefix} \
 	BOOST_TOOLKIT=gcc43 \
-	INPUT_PLUGINS='raster,sqlite,osm,gdal,kismet,shape,postgis,ogr' \
+	INPUT_PLUGINS='raster,rasterlite,sqlite,osm,gdal,kismet,shape,postgis,ogr,geos,occi' \
 	SYSTEM_FONTS=%{_datadir}/fonts/TTF
 
 %install
@@ -102,9 +100,6 @@ rm -rf $RPM_BUILD_ROOT
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
 %py_postclean
 
-## DejaVu fonts are available in a separate package
-#rm -rf $RPM_BUILD_ROOT%{_libdir}/%{name}/fonts
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -114,21 +109,33 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS CHANGELOG INSTALL README
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
-%dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/input
-%attr(755,root,root) %{_libdir}/%{name}/input/*.input
+%attr(755,root,root) %{_bindir}/mapnik-config
+%attr(755,root,root) %{_bindir}/mapnik-speed-check
+%attr(755,root,root) %{_bindir}/shapeindex
+%attr(755,root,root) %{_bindir}/upgrade_map_xml.py
+%attr(755,root,root) %{_libdir}/libmapnik2.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmapnik2.so.2.0
+%dir %{_libdir}/mapnik2
+%dir %{_libdir}/mapnik2/input
+%attr(755,root,root) %{_libdir}/mapnik2/input/gdal.input
+%attr(755,root,root) %{_libdir}/mapnik2/input/geos.input
+%attr(755,root,root) %{_libdir}/mapnik2/input/kismet.input
+%attr(755,root,root) %{_libdir}/mapnik2/input/ogr.input
+%attr(755,root,root) %{_libdir}/mapnik2/input/osm.input
+%attr(755,root,root) %{_libdir}/mapnik2/input/postgis.input
+%attr(755,root,root) %{_libdir}/mapnik2/input/raster.input
+%attr(755,root,root) %{_libdir}/mapnik2/input/shape.input
+%attr(755,root,root) %{_libdir}/mapnik2/input/sqlite.input
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_includedir}/*
+%attr(755,root,root) %{_libdir}/libmapnik2.so
+%{_includedir}/mapnik
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
-%dir %{py_sitedir}/%{name}
-%{py_sitedir}/%{name}/*.py[co]
-%attr(755,root,root) %{py_sitedir}/%{name}/*.so
-%dir %{py_sitedir}/%{name}/ogcserver
-%{py_sitedir}/%{name}/ogcserver/*.py[co]
+%dir %{py_sitedir}/mapnik2
+%{py_sitedir}/mapnik2/*.py[co]
+%attr(755,root,root) %{py_sitedir}/mapnik2/_mapnik2.so
+%dir %{py_sitedir}/mapnik2/ogcserver
+%{py_sitedir}/mapnik2/ogcserver/*.py[co]
