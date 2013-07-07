@@ -2,7 +2,7 @@
 Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
 Version:	2.0.0
-Release:	10
+Release:	11
 License:	LGPL v2.1
 Group:		Applications
 Source0:	http://download.berlios.de/mapnik/%{name}-%{version}.tar.bz2
