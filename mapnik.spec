@@ -1,13 +1,15 @@
 #
 Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
-Version:	2.0.0
-Release:	18
+Version:	2.2.0
+Release:	1
 License:	LGPL v2.1
 Group:		Applications
-Source0:	http://download.berlios.de/mapnik/%{name}-%{version}.tar.bz2
-# Source0-md5:	499c6a61544014b9bc2a7c978f963ef3
+Source0:	https://github.com/mapnik/mapnik/archive/v%{version}.tar.gz
+# Source0-md5:	b837931c7f1a4dc630d8550d3e635036
 Patch0:		%{name}-boost_lib_names.patch
+Patch1:		mapnik-boost-megadiff.diff
+Patch2:		%{name}-build.patch
 URL:		http://mapnik.org/
 BuildRequires:	boost-devel
 BuildRequires:	boost-python-devel
@@ -19,6 +21,7 @@ BuildRequires:	libicu-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libltdl-devel
 BuildRequires:	libpng-devel
+BuildRequires:	librasterlite-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	pkgconfig
@@ -80,21 +83,29 @@ Statyczna biblioteka Mapnik.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %scons \
 	PREFIX=%{_prefix} \
 	BOOST_TOOLKIT=gcc43 \
-	INPUT_PLUGINS='raster,rasterlite,sqlite,osm,gdal,kismet,shape,postgis,ogr,geos,occi' \
-	SYSTEM_FONTS=%{_datadir}/fonts/TTF
+	INPUT_PLUGINS='raster,rasterlite,sqlite,osm,gdal,shape,postgis,ogr,occi,csv,geojson' \
+	SYSTEM_FONTS=%{_datadir}/fonts/TTF \
+	LIBDIR_SCHEMA=%{_lib} \
+	SVG2PNG=True
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %scons install \
-	PREFIX=%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT \
-	SYSTEM_FONTS=%{_datadir}/fonts/TTF
+	PREFIX=%{_prefix} \
+	BOOST_TOOLKIT=gcc43 \
+	INPUT_PLUGINS='raster,rasterlite,sqlite,osm,gdal,shape,postgis,ogr,occi,csv,geojson' \
+	SYSTEM_FONTS=%{_datadir}/fonts/TTF \
+	LIBDIR_SCHEMA=%{_lib} \
+	SVG2PNG=True
 
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
@@ -108,34 +119,35 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CHANGELOG INSTALL README
+%doc AUTHORS.md CHANGELOG.md INSTALL.md README.md
 %attr(755,root,root) %{_bindir}/mapnik-config
 %attr(755,root,root) %{_bindir}/mapnik-speed-check
 %attr(755,root,root) %{_bindir}/shapeindex
 %attr(755,root,root) %{_bindir}/upgrade_map_xml.py
-%attr(755,root,root) %{_libdir}/libmapnik2.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmapnik2.so.2.0
-%dir %{_libdir}/mapnik2
-%dir %{_libdir}/mapnik2/input
-%attr(755,root,root) %{_libdir}/mapnik2/input/gdal.input
-%attr(755,root,root) %{_libdir}/mapnik2/input/geos.input
-%attr(755,root,root) %{_libdir}/mapnik2/input/kismet.input
-%attr(755,root,root) %{_libdir}/mapnik2/input/ogr.input
-%attr(755,root,root) %{_libdir}/mapnik2/input/osm.input
-%attr(755,root,root) %{_libdir}/mapnik2/input/postgis.input
-%attr(755,root,root) %{_libdir}/mapnik2/input/raster.input
-%attr(755,root,root) %{_libdir}/mapnik2/input/shape.input
-%attr(755,root,root) %{_libdir}/mapnik2/input/sqlite.input
+%attr(755,root,root) %{_libdir}/libmapnik.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmapnik.so.2.2
+%dir %{_libdir}/mapnik
+%dir %{_libdir}/mapnik/input
+%attr(755,root,root) %{_libdir}/mapnik/input/csv.input
+%attr(755,root,root) %{_libdir}/mapnik/input/gdal.input
+%attr(755,root,root) %{_libdir}/mapnik/input/geojson.input
+%attr(755,root,root) %{_libdir}/mapnik/input/ogr.input
+%attr(755,root,root) %{_libdir}/mapnik/input/osm.input
+%attr(755,root,root) %{_libdir}/mapnik/input/postgis.input
+%attr(755,root,root) %{_libdir}/mapnik/input/raster.input
+%attr(755,root,root) %{_libdir}/mapnik/input/rasterlite.input
+%attr(755,root,root) %{_libdir}/mapnik/input/shape.input
+%attr(755,root,root) %{_libdir}/mapnik/input/sqlite.input
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmapnik2.so
+%attr(755,root,root) %{_libdir}/libmapnik.so
 %{_includedir}/mapnik
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
+%dir %{py_sitedir}/mapnik
+%{py_sitedir}/mapnik/*.py[co]
+%attr(755,root,root) %{py_sitedir}/mapnik/_mapnik.so
 %dir %{py_sitedir}/mapnik2
 %{py_sitedir}/mapnik2/*.py[co]
-%attr(755,root,root) %{py_sitedir}/mapnik2/_mapnik2.so
-%dir %{py_sitedir}/mapnik2/ogcserver
-%{py_sitedir}/mapnik2/ogcserver/*.py[co]

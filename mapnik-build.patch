@@ -1,0 +1,11 @@
+--- mapnik-2.2.0/src/build.py~	2013-06-04 03:28:47.000000000 +0200
++++ mapnik-2.2.0/src/build.py	2014-11-10 11:37:08.355377411 +0100
+@@ -59,6 +59,8 @@
+ # clear out and re-set libs for this env
+ lib_env['LIBS'] = ['freetype','z',env['ICU_LIB_NAME'],filesystem,system,regex]
+ 
++lib_env['LIBS'].append('dl')
++
+ if env['PROJ']:
+    lib_env['LIBS'].append('proj')
+ 
