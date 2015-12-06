@@ -1,0 +1,14 @@
+--- mapnik-2.2.0/SConstruct~	2015-12-06 00:40:11.000000000 +0100
++++ mapnik-2.2.0/SConstruct	2015-12-06 01:18:15.465765196 +0100
+@@ -1502,9 +1502,9 @@
+ 
+             # Note: we use the plat_specific argument here to make sure to respect the arch-specific site-packages location
+             if py3:
+-                site_packages = '''%s -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(plat_specific=True))"''' % env['PYTHON']
++                site_packages = '''%s -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(plat_specific=True,prefix=\'/usr\'))"''' % env['PYTHON']
+             else:
+-                site_packages = '''%s -c "from distutils.sysconfig import get_python_lib; print get_python_lib(plat_specific=True)"''' % env['PYTHON']
++                site_packages = '''%s -c "from distutils.sysconfig import get_python_lib; print get_python_lib(plat_specific=True,prefix=\'/usr\')"''' % env['PYTHON']
+             env['PYTHON_SITE_PACKAGES'] = call(site_packages)
+         else:
+             env['PYTHON_SYS_PREFIX'] = os.popen('''%s -c "import sys; print sys.prefix"''' % env['PYTHON']).read().strip()
