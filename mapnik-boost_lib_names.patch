@@ -1,6 +1,6 @@
---- mapnik-0.7.1/SConstruct~	2010-03-22 18:40:47.000000000 +0200
-+++ mapnik-0.7.1/SConstruct	2010-04-06 15:26:44.282392752 +0300
-@@ -561,10 +561,6 @@
+--- mapnik-3.0.9/SConstruct~	2015-11-26 11:13:12.000000000 +0100
++++ mapnik-3.0.9/SConstruct	2015-12-14 00:16:09.848114888 +0100
+@@ -755,10 +755,6 @@
          # which goes <toolset>-<threading>-<abi>-<version>. See:
          #  http://www.boost.org/doc/libs/1_35_0/more/getting_started/unix-variants.html#library-naming
          append_params = ['']

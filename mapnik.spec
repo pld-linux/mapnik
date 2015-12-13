@@ -1,16 +1,13 @@
 #
 Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
-Version:	2.2.0
-Release:	8
+Version:	3.0.9
+Release:	1
 License:	LGPL v2.1
 Group:		Applications
-Source0:	https://github.com/mapnik/mapnik/archive/v%{version}.tar.gz
-# Source0-md5:	b837931c7f1a4dc630d8550d3e635036
-Patch0:		%{name}-boost_lib_names.patch
-Patch1:		mapnik-boost-megadiff.diff
-Patch2:		%{name}-build.patch
-Patch3:		python-install.patch
+Source0:	https://github.com/mapnik/mapnik/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	89907d70b84e45680ee31b27d464fa56
+Patch0:		mapnik-boost_lib_names.patch
 URL:		http://mapnik.org/
 BuildRequires:	boost-devel
 BuildRequires:	boost-python-devel
@@ -84,15 +81,12 @@ Statyczna biblioteka Mapnik.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %scons \
 	PREFIX=%{_prefix} \
 	BOOST_TOOLKIT=gcc43 \
-	INPUT_PLUGINS='raster,rasterlite,sqlite,osm,gdal,shape,postgis,ogr,occi,csv,geojson' \
+	INPUT_PLUGINS='csv,gdal,geojson,ogr,pgraster,postgis,raster,shape,sqlite,topojson' \
 	SYSTEM_FONTS=%{_datadir}/fonts/TTF \
 	LIBDIR_SCHEMA=%{_lib} \
 	SVG2PNG=True
@@ -104,7 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix} \
 	BOOST_TOOLKIT=gcc43 \
-	INPUT_PLUGINS='raster,rasterlite,sqlite,osm,gdal,shape,postgis,ogr,occi,csv,geojson' \
+	INPUT_PLUGINS='csv,gdal,geojson,ogr,pgraster,postgis,raster,shape,sqlite,topojson' \
 	SYSTEM_FONTS=%{_datadir}/fonts/TTF \
 	LIBDIR_SCHEMA=%{_lib} \
 	SVG2PNG=True
