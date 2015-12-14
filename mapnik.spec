@@ -87,7 +87,7 @@ Statyczna biblioteka Mapnik.
 	LIBDIR_SCHEMA=%{_lib} \
 	SVG2PNG=True
 
-%{__make}
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
