@@ -31,6 +31,7 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	scons
 BuildRequires:	sqlite3-devel
 BuildRequires:	zlib-devel
+Obsoletes:	python-mapnik < 3.0.9-1
 Suggests:	fonts-TTF-DejaVu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -44,15 +45,6 @@ Mapnik is about making beautiful maps. It uses the AGG library and
 offers world class anti-aliasing rendering with subpixel accuracy for
 geographic data. It is written from scratch in modern C++ and doesn't
 suffer from design decisions made a decade ago.
-
-%package -n python-%{name}
-Summary:	Python bindings for Mapnik
-Group:		Libraries/Python
-Requires:	%{name} = %{version}-%{release}
-
-%description -n python-%{name}
-Python binding for Mapnik, the toolkit for developing GIS (Geographic
-Information Systems) applications.
 
 %package devel
 Summary:	Header files for Mapnik
@@ -84,6 +76,9 @@ Statyczna biblioteka Mapnik.
 
 %build
 %scons configure \
+	CUSTOM_CXXFLAGS="%{rpmcxxflags}" \
+	CUSTOM_CFLAGS="%{rpmcflags}" \
+	CUSTOM_LDFLAGS="%{rpmldflags}" \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix} \
 	BOOST_TOOLKIT=gcc43 \
@@ -92,12 +87,12 @@ Statyczna biblioteka Mapnik.
 	LIBDIR_SCHEMA=%{_lib} \
 	SVG2PNG=True
 
-%scons
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%scons install
+%{__make} install
 
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
@@ -113,33 +108,27 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS.md CHANGELOG.md INSTALL.md README.md
 %attr(755,root,root) %{_bindir}/mapnik-config
-%attr(755,root,root) %{_bindir}/mapnik-speed-check
+%attr(755,root,root) %{_bindir}/mapnik-index
+%attr(755,root,root) %{_bindir}/mapnik-render
 %attr(755,root,root) %{_bindir}/shapeindex
-%attr(755,root,root) %{_bindir}/upgrade_map_xml.py
 %attr(755,root,root) %{_libdir}/libmapnik.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmapnik.so.2.2
+%attr(755,root,root) %ghost %{_libdir}/libmapnik.so.3.0
 %dir %{_libdir}/mapnik
 %dir %{_libdir}/mapnik/input
 %attr(755,root,root) %{_libdir}/mapnik/input/csv.input
 %attr(755,root,root) %{_libdir}/mapnik/input/gdal.input
 %attr(755,root,root) %{_libdir}/mapnik/input/geojson.input
 %attr(755,root,root) %{_libdir}/mapnik/input/ogr.input
-%attr(755,root,root) %{_libdir}/mapnik/input/osm.input
+%attr(755,root,root) %{_libdir}/mapnik/input/pgraster.input
 %attr(755,root,root) %{_libdir}/mapnik/input/postgis.input
 %attr(755,root,root) %{_libdir}/mapnik/input/raster.input
-%attr(755,root,root) %{_libdir}/mapnik/input/rasterlite.input
 %attr(755,root,root) %{_libdir}/mapnik/input/shape.input
 %attr(755,root,root) %{_libdir}/mapnik/input/sqlite.input
+%attr(755,root,root) %{_libdir}/mapnik/input/topojson.input
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libmapnik.so
 %{_includedir}/mapnik
-
-%files -n python-%{name}
-%defattr(644,root,root,755)
-%dir %{py_sitedir}/mapnik
-%{py_sitedir}/mapnik/*.py[co]
-%attr(755,root,root) %{py_sitedir}/mapnik/_mapnik.so
-%dir %{py_sitedir}/mapnik2
-%{py_sitedir}/mapnik2/*.py[co]
+%{_libdir}/libmapnik-json.a
+%{_libdir}/libmapnik-wkt.a
