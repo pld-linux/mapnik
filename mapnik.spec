@@ -83,18 +83,7 @@ Statyczna biblioteka Mapnik.
 %patch0 -p1
 
 %build
-%scons \
-	PREFIX=%{_prefix} \
-	BOOST_TOOLKIT=gcc43 \
-	INPUT_PLUGINS='csv,gdal,geojson,ogr,pgraster,postgis,raster,shape,sqlite,topojson' \
-	SYSTEM_FONTS=%{_datadir}/fonts/TTF \
-	LIBDIR_SCHEMA=%{_lib} \
-	SVG2PNG=True
-
-%install
-rm -rf $RPM_BUILD_ROOT
-
-%scons install \
+%scons configure \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix} \
 	BOOST_TOOLKIT=gcc43 \
@@ -102,6 +91,13 @@ rm -rf $RPM_BUILD_ROOT
 	SYSTEM_FONTS=%{_datadir}/fonts/TTF \
 	LIBDIR_SCHEMA=%{_lib} \
 	SVG2PNG=True
+
+%scons
+
+%install
+rm -rf $RPM_BUILD_ROOT
+
+%scons install
 
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
