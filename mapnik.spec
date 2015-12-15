@@ -1,4 +1,8 @@
-#
+# it's not possible to build this with debuginfo on 32bit archs due to
+# memory constraints
+%ifarch %{ix86} x32
+%define		_enable_debug_packages		0
+%endif
 Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
 Version:	3.0.9
