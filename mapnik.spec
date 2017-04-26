@@ -5,12 +5,12 @@
 %endif
 Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
-Version:	3.0.9
-Release:	6
+Version:	3.0.12
+Release:	1
 License:	LGPL v2.1
 Group:		Applications
-Source0:	https://github.com/mapnik/mapnik/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	89907d70b84e45680ee31b27d464fa56
+Source0:	https://github.com/mapnik/mapnik/releases/download/v%{version}/%{name}-v%{version}.tar.bz2
+# Source0-md5:	221c1fa8e63f4cc93b3040e9382e3394
 Patch0:		mapnik-boost_lib_names.patch
 URL:		http://mapnik.org/
 BuildRequires:	boost-devel
@@ -75,7 +75,7 @@ Static Mapnik library.
 Statyczna biblioteka Mapnik.
 
 %prep
-%setup -q
+%setup -q -n %{name}-v%{version}
 %patch0 -p1
 
 %build
