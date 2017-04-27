@@ -12,6 +12,8 @@ Group:		Applications
 Source0:	https://github.com/mapnik/mapnik/releases/download/v%{version}/%{name}-v%{version}.tar.bz2
 # Source0-md5:	221c1fa8e63f4cc93b3040e9382e3394
 Patch0:		mapnik-boost_lib_names.patch
+Patch1:		cxx.patch
+Patch2:		icu59.patch
 URL:		http://mapnik.org/
 BuildRequires:	boost-devel
 BuildRequires:	boost-python-devel
@@ -77,6 +79,8 @@ Statyczna biblioteka Mapnik.
 %prep
 %setup -q -n %{name}-v%{version}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %scons configure \

@@ -1,0 +1,10 @@
+--- mapnik-v3.0.12/include/mapnik/value_types.hpp~	2016-09-08 10:49:19.000000000 +0200
++++ mapnik-v3.0.12/include/mapnik/value_types.hpp	2017-04-27 21:00:01.132437004 +0200
+@@ -31,6 +31,7 @@
+ #pragma GCC diagnostic push
+ #include <mapnik/warning_ignore.hpp>
+ #include <unicode/uversion.h> // for U_NAMESPACE_QUALIFIER
++#include <unicode/unistr.h>
+ #pragma GCC diagnostic pop
+ 
+ // stl
