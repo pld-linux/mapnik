@@ -6,7 +6,7 @@
 Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
 Version:	3.0.20
-Release:	1
+Release:	2
 License:	LGPL v2.1
 Group:		Applications
 Source0:	https://github.com/mapnik/mapnik/releases/download/v%{version}/%{name}-v%{version}.tar.bz2
@@ -81,7 +81,7 @@ Statyczna biblioteka Mapnik.
 %patch2 -p1
 
 %build
-%scons configure \
+./configure \
 	CUSTOM_CXXFLAGS="%{rpmcxxflags}" \
 	CUSTOM_CFLAGS="%{rpmcflags}" \
 	CUSTOM_LDFLAGS="%{rpmldflags}" \
