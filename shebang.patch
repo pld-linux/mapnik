@@ -1,0 +1,11 @@
+--- mapnik-v3.0.23/utils/mapnik-config/build.py.orig_	2020-02-18 11:26:42.000000000 +0100
++++ mapnik-v3.0.23/utils/mapnik-config/build.py	2020-11-12 15:54:37.473268970 +0100
+@@ -46,7 +46,7 @@ if (GetMapnikLibVersion() != config_env[
+     print ('Error: version.hpp mismatch (%s) to cached value (%s): please reconfigure mapnik' % (GetMapnikLibVersion(),config_env['MAPNIK_VERSION_STRING']))
+     Exit(1)
+ 
+-config_variables = '''#!/usr/bin/env bash
++config_variables = '''#!/bin/bash
+ 
+ ## variables
+ 

@@ -5,14 +5,15 @@
 %endif
 Summary:	Toolkit for developing GIS (Geographic Information Systems) applications
 Name:		mapnik
-Version:	3.0.20
-Release:	2
+Version:	3.1.0
+Release:	1
 License:	LGPL v2.1
 Group:		Applications
 Source0:	https://github.com/mapnik/mapnik/releases/download/v%{version}/%{name}-v%{version}.tar.bz2
-# Source0-md5:	10da364a50d5ccaf33a8b253ed75aa4f
+# Source0-md5:	4f2aeb9a4a747862b915072a8e27b2a5
 Patch0:		mapnik-boost_lib_names.patch
 Patch2:		icu59.patch
+Patch3:		shebang.patch
 URL:		http://mapnik.org/
 BuildRequires:	boost-devel
 BuildRequires:	boost-python-devel
@@ -79,15 +80,16 @@ Statyczna biblioteka Mapnik.
 %setup -q -n %{name}-v%{version}
 %patch0 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 ./configure \
-	CUSTOM_CXXFLAGS="%{rpmcxxflags}" \
-	CUSTOM_CFLAGS="%{rpmcflags}" \
+	CUSTOM_CXXFLAGS="%{rpmcxxflags} -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H" \
+	CUSTOM_CFLAGS="%{rpmcflags} -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H" \
 	CUSTOM_LDFLAGS="%{rpmldflags}" \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix} \
-	BOOST_TOOLKIT=gcc43 \
+	BOOST_TOOLKIT=gcc102 \
 	INPUT_PLUGINS='csv,gdal,geojson,ogr,pgraster,postgis,raster,shape,sqlite,topojson' \
 	SYSTEM_FONTS=%{_datadir}/fonts/TTF \
 	LIBDIR_SCHEMA=%{_lib} \
@@ -113,12 +115,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS.md CHANGELOG.md INSTALL.md README.md
-%attr(755,root,root) %{_bindir}/mapnik-config
 %attr(755,root,root) %{_bindir}/mapnik-index
 %attr(755,root,root) %{_bindir}/mapnik-render
 %attr(755,root,root) %{_bindir}/shapeindex
+%attr(755,root,root) %{_bindir}/svg2png
 %attr(755,root,root) %{_libdir}/libmapnik.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmapnik.so.3.0
+%attr(755,root,root) %ghost %{_libdir}/libmapnik.so.3.1
 %dir %{_libdir}/mapnik
 %dir %{_libdir}/mapnik/input
 %attr(755,root,root) %{_libdir}/mapnik/input/csv.input
@@ -134,6 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/mapnik-config
 %attr(755,root,root) %{_libdir}/libmapnik.so
 %{_includedir}/mapnik
 %{_libdir}/libmapnik-json.a
